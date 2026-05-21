@@ -1,0 +1,28 @@
+workflows:
+  ios-workflow:
+    name: FitForge iOS Build
+    max_build_duration: 60
+    environment:
+      xcode: latest
+
+    scripts:
+      - name: Install XcodeGen
+        script: brew install xcodegen
+
+      - name: Generate Xcode project
+        script: xcodegen generate --spec project.yml
+
+      - name: Build for simulator
+        script: |
+          xcodebuild build \
+            -project FitForge.xcodeproj \
+            -scheme FitForge \
+            -destination 'platform=iOS Simulator,name=iPhone 15 Pro,OS=latest' \
+            -configuration Debug \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGNING_ALLOWED=NO \
+            | xcpretty
+
+    artifacts:
+      - FitForge.xcodeproj
