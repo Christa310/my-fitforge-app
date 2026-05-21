@@ -4,18 +4,21 @@ on:
   push:
     branches: [ main ]
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   build:
     runs-on: macos-latest
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4        # ← Updated from v3 to v4
+        uses: actions/checkout@v4
 
       - name: Select Xcode version
         run: sudo xcode-select -s /Applications/Xcode.app
 
-      - name: Show available simulators  # ← New: helps us see what's available
+      - name: Show available simulators
         run: xcrun simctl list devicetypes
 
       - name: Build and Test
