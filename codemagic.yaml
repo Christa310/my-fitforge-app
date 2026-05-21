@@ -1,0 +1,15 @@
+workflows:
+  ios-workflow:
+    name: FitForge iOS Build
+    max_build_duration: 60
+    environment:
+      xcode: latest
+
+    scripts:
+      - name: Build for simulator
+        script: |
+          xcodebuild build \
+            -scheme FitForge \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_REQUIRED=NO
